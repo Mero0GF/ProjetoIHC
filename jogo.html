@@ -97,7 +97,7 @@
 
         .botao-confirmar {
             display: block;
-            margin-top: 20px;
+            margin-top: 40px;
             padding: 20px 50px;
             font-size: 22px;
             font-weight: bold;
@@ -118,7 +118,7 @@
     <div class="container">
         <div class="music-player">
             <audio controls>
-                <source src="violaobaixo.wav">
+                <source src>
             </audio>
         </div>
 
@@ -131,7 +131,7 @@
         <div>
             <button class="botao-instrumento" onclick="toggleSelection(this)">🎻 Violino</button>
             <button class="botao-instrumento" onclick="toggleSelection(this)">🔺 Triângulo</button>
-            <button class="botao-instrumento" onclick="toggleSelection(this)">🎺 Trompete</button>
+            <button class="botao-instrumento" onclick="toggleSelection(this)">🎵 Violão</button>
             <button class="botao-instrumento" onclick="toggleSelection(this)">👼 Harpa</button>
         </div>
         <div>
@@ -144,9 +144,52 @@
     </div>
 
     <script>
+        // Função para trocar a seleção do botão
         let confirmado = false;
         let pontuacao = localStorage.getItem('pontuacao') ? parseInt(localStorage.getItem('pontuacao')) : 0; // Carregar a pontuação do armazenamento local
+        // Lista de arquivos de áudio
+        const listaAudios = [
+            "Baixo.wav", 
+            "BaixoViolao.wav", 
+            "Bateria.mp3", 
+            "BateriaBaixo.wav", 
+            "Flauta.wav", 
+            "Guitarra.wav", 
+            "GuitarraBateriaBaixo.wav", 
+            "GuitarraTeclado.wav", 
+            "Harpa.wav", 
+            "HarpaViolonceloFlautaViolino.wav", 
+            "Triangulo.wav", 
+            "TrianguloBateriaBaixoGuitarra.wav", 
+            "Trompeta.wav", 
+            "Violao.wav", 
+            "Violao2.mp3", 
+            "ViolaoBaixo.wav", 
+            "Violino.wav", 
+            "ViolinoTrompetaBateria.mp3", 
+            "Violoncelo.wav", 
+            "ViolonceloViolino.wav"
+        ];
 
+        // Função para escolher um áudio aleatório e reproduzi-lo
+        function reproduzirAudioAleatorio() {
+            // Selecionar um áudio aleatório da lista
+            const audioSelecionado = listaAudios[Math.floor(Math.random() * listaAudios.length)];
+
+            // Alterar o src do elemento de áudio
+            const audioElement = document.querySelector('.music-player audio');
+            audioElement.src = audioSelecionado;
+
+            // Reiniciar o áudio
+            audioElement.load();
+        }
+
+        // Reproduzir um áudio aleatório ao carregar a página
+        window.addEventListener('load', () => {
+            reproduzirAudioAleatorio();
+        });
+
+        // Função para alternar a seleção do botão
         function toggleSelection(button) {
             if (!confirmado) {
                 button.classList.toggle('selected');
@@ -183,6 +226,16 @@
             const pontuacaoElement = document.querySelector('.pontuacao');
             pontuacaoElement.textContent = `🏅 Pontuação: ${pontuacao}`;
         });
+
+        // Limpar a pontuação ao clicar no botão "Voltar"
+        const botaoVoltar = document.querySelector('.botao-voltar');
+        botaoVoltar.addEventListener('click', () => {
+            localStorage.removeItem('pontuacao'); // Limpar a pontuação do armazenamento local
+            pontuacao = 0; // Reiniciar a pontuação para 0
+            atualizarPontuacao(); // Atualizar a exibição da pontuação na página
+        });
+
+
             </script>
 
             <!-- Botão "Voltar" -->
