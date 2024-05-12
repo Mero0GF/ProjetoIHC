@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            position: relative; 
+            min-height: 100vh;
+            font-family: 'Courier New', Courier, monospace;
+            background-image: url('BackgroundMainmenu.jpg'); /* Substitua 'caminho/para/sua/imagem.jpg' pelo caminho da sua imagem */
+            background-size: cover;
+            background-position: center;
+            background-repeat: repeat;
+        }
+
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .music-player {
+            background: none; /* Removendo o fundo roxo */
+            width: 500px; /* Aumentando o tamanho */
+            padding: 20px; /* Espaçamento interno */
+            text-align: center;
+            margin-bottom: 20px; /* Reduzindo a margem inferior */
+            border-radius: 25px;
+        }
+
+        .botao-instrumento {
+            display: inline-block;
+            width: 210px;
+            height: 100px;
+            line-height: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #007bff; /* Cor azul claro */
+            color: #fff;
+            margin: 10px;
+            border: none;
+            border-radius: 35px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .botao-instrumento.selected {
+            background-color: #8ab6d6; /* Mantém a cor azul claro ao ser selecionado */
+            color: #fff;
+        }
+
+        .botao-instrumento.confirmado {
+            background-color: #28a745 !important; /* Cor verde */
+        }
+
+        .botao-voltar {
+            padding: 15px 30px; /* Ajustando o tamanho */
+            font-size: 22px;
+            font-weight: bold;
+            color: #ffffff; /* Cor roxa */
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease; /* Adicionando transição de cor */
+            text-decoration: underline; /* Adicionando sublinhado */
+            position: absolute;
+            top: 10px; /* Posicionamento superior */
+            left: 10px; /* Posicionamento esquerdo */
+        }
+
+        .botao-voltar:hover {
+            color: #a0a0a0; /* Mudando a cor no hover */
+        }
+
+        .pontuacao {
+            position: absolute;
+            top: 10px;
+            right: 10px; /* Movendo para a direita */
+            font-size: 30px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            padding: 20px 20px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #ffffff;
+        }
+
+        .botao-confirmar {
+            display: block;
+            margin-top: 20px;
+            padding: 20px 50px;
+            font-size: 22px;
+            font-weight: bold;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .botao-confirmar:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="music-player">
+            <audio controls>
+                <source src="violaobaixo.wav">
+            </audio>
+        </div>
+
+        <div>
+            <button class="botao-instrumento" onclick="toggleSelection(this)">🎹 Piano</button>
+            <button class="botao-instrumento" onclick="toggleSelection(this)">🎸 Guitarra</button>
+            <button class="botao-instrumento" onclick="toggleSelection(this)">🥁 Bateria</button>
+            <button class="botao-instrumento" onclick="toggleSelection(this)">🎺 Trompete</button>
+        </div>
+        <div>
+            <button class="botao-instrumento" onclick="toggleSelection(this)">🎻 Violino</button>
+            <button class="botao-instrumento" onclick="toggleSelection(this)">🔺 Triângulo</button>
+            <button class="botao-instrumento" onclick="toggleSelection(this)">🎺 Trompete</button>
+            <button class="botao-instrumento" onclick="toggleSelection(this)">👼 Harpa</button>
+        </div>
+        <div>
+            <button class="botao-instrumento" onclick="toggleSelection(this)">🔉🎸 Baixo</button>
+            <button class="botao-instrumento" onclick="toggleSelection(this)">🎼 Flauta</button>
+            <button class="botao-instrumento" onclick="toggleSelection(this)">🎻 Violoncelo</button>
+            <button class="botao-instrumento" onclick="toggleSelection(this)">🎹 Teclado</button>
+        </div>
+        <button class="botao-confirmar" onclick="confirmarSelecao()">Confirmar</button>
+    </div>
+
+    <script>
+        let confirmado = false;
+        let pontuacao = localStorage.getItem('pontuacao') ? parseInt(localStorage.getItem('pontuacao')) : 0; // Carregar a pontuação do armazenamento local
+
+        function toggleSelection(button) {
+            if (!confirmado) {
+                button.classList.toggle('selected');
+            }
+        }
+
+        function confirmarSelecao() {
+            if (!confirmado) {
+                const buttons = document.querySelectorAll('.botao-instrumento.selected');
+                pontuacao += buttons.length; // Incrementar a pontuação com o número de botões selecionados
+                localStorage.setItem('pontuacao', pontuacao); // Salvar a pontuação no armazenamento local
+                const pontuacaoElement = document.querySelector('.pontuacao');
+                pontuacaoElement.textContent = `🏅 Pontuação: ${pontuacao}`; // Atualizar o elemento de pontuação
+                buttons.forEach(button => {
+                    button.classList.remove('selected');
+                    button.classList.add('confirmado');
+                });
+                confirmado = true;
+
+                // Trocar o botão por um ícone de carregamento
+                const confirmarBtn = document.querySelector('.botao-confirmar');
+                confirmarBtn.innerHTML = 'Carregando...'; // Pode substituir por um ícone de spinner, por exemplo
+                confirmarBtn.disabled = true;
+
+                // Atualizar a página após dois segundos
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            }
+        }
+
+        // Atualizar a pontuação ao carregar a página
+        window.addEventListener('load', () => {
+            const pontuacaoElement = document.querySelector('.pontuacao');
+            pontuacaoElement.textContent = `🏅 Pontuação: ${pontuacao}`;
+        });
+            </script>
+
+            <!-- Botão "Voltar" -->
+            <a href="main.html" class="botao-voltar"><span>Voltar</span></a>
+
+            <div class="pontuacao">🏅 Pontuação:</div>
+</body>
+</html>

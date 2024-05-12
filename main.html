@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musical Guess</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            background-image: url('BackgroundMainmenu.jpg'); /* Substitua 'caminho/para/sua/imagem.jpg' pelo caminho da sua imagem */
+            background-size: cover;
+            background-position: center;
+            background-repeat: repeat;
+        }
+
+        .container {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #fff;
+        }
+
+        .titulo {
+            font-size: 72px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 200px;
+        }
+
+        .botao-comecar {
+            display: inline-block;
+            padding: 60px 200px;
+            font-size: 50px;
+            font-weight: bold;
+            background-color: #54308d;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 35px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .botao-comecar:hover {
+            background-color: #9f5adf;
+        }
+
+        .desenvolvedores {
+            position: absolute;
+            bottom: 20px;
+            left: 10px;
+            font-size: 28px;
+            color: #ffffff;
+            white-space: pre-line;
+        }
+
+        .instrumentos{
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 50px 120px;
+            font-size: 28px;
+            font-weight: bold;
+            background-color: #54308d;
+            color: #fff;
+            border: none;
+            border-radius: 35px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .instrumentos:hover {
+            background-color: #9f5adf;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="titulo">🎶 Musical Guess 🎶</div>
+        <a href="jogo.html" id="botao-comecar" class="botao-comecar">Começar 🎧</a>
+    </div>
+
+    <div class="desenvolvedores">
+        Desenvolvedores:
+            - Lucas Goulart de Farias Meres
+            - Thiago Leandro Liporace
+            - Renan Tagliaferro 
+    </div>
+
+    <button class="instrumentos">🎹 Instrumentos 🎹</button>
+
+</body>
+</html>
+
