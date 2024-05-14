@@ -115,12 +115,14 @@
     </style>
 </head>
 <body>
+
     <div class="container">
         <div class="music-player">
             <audio controls>
                 <source src>
             </audio>
         </div>
+        
 
         <div>
             <button class="botao-instrumento" onclick="toggleSelection(this)">🎹 Piano</button>
@@ -235,11 +237,17 @@
             atualizarPontuacao(); // Atualizar a exibição da pontuação na página
         });
 
+        function limparPontuacao() {
+        localStorage.removeItem('pontuacao'); // Limpar a pontuação do armazenamento local
+        pontuacao = 0; // Reiniciar a pontuação para zero
+        atualizarPontuacao(); // Atualizar a exibição da pontuação na página
+        }
 
             </script>
 
             <!-- Botão "Voltar" -->
-            <a href="main.html" class="botao-voltar"><span>Voltar</span></a>
+
+            <a class="botao-voltar" onclick="limparPontuacao()" href="main.html"><span>Voltar</span></a>
 
             <div class="pontuacao">🏅 Pontuação:</div>
 </body>
