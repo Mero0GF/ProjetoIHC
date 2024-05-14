@@ -198,49 +198,131 @@
             }
         }
 
-        function confirmarSelecao() {
-            if (!confirmado) {
-                const buttons = document.querySelectorAll('.botao-instrumento.selected');
-                pontuacao += buttons.length; // Incrementar a pontuação com o número de botões selecionados
-                localStorage.setItem('pontuacao', pontuacao); // Salvar a pontuação no armazenamento local
-                const pontuacaoElement = document.querySelector('.pontuacao');
-                pontuacaoElement.textContent = `🏅 Pontuação: ${pontuacao}`; // Atualizar o elemento de pontuação
-                buttons.forEach(button => {
-                    button.classList.remove('selected');
-                    button.classList.add('confirmado');
-                });
-                confirmado = true;
-
-                // Trocar o botão por um ícone de carregamento
-                const confirmarBtn = document.querySelector('.botao-confirmar');
-                confirmarBtn.innerHTML = 'Carregando...'; // Pode substituir por um ícone de spinner, por exemplo
-                confirmarBtn.disabled = true;
-
-                // Atualizar a página após dois segundos
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000);
-            }
-        }
-
         // Atualizar a pontuação ao carregar a página
         window.addEventListener('load', () => {
             const pontuacaoElement = document.querySelector('.pontuacao');
             pontuacaoElement.textContent = `🏅 Pontuação: ${pontuacao}`;
         });
 
-        // Limpar a pontuação ao clicar no botão "Voltar"
-        const botaoVoltar = document.querySelector('.botao-voltar');
-        botaoVoltar.addEventListener('click', () => {
-            localStorage.removeItem('pontuacao'); // Limpar a pontuação do armazenamento local
-            pontuacao = 0; // Reiniciar a pontuação para 0
-            atualizarPontuacao(); // Atualizar a exibição da pontuação na página
-        });
-
         function limparPontuacao() {
         localStorage.removeItem('pontuacao'); // Limpar a pontuação do armazenamento local
         pontuacao = 0; // Reiniciar a pontuação para zero
         atualizarPontuacao(); // Atualizar a exibição da pontuação na página
+        }
+        
+        // Função para verificar se os botões selecionados correspondem aos instrumentos corretos
+        function verificarAcerto() {
+            // Obter o nome do áudio atual
+            const audioAtual = document.querySelector('.music-player audio').src.split('/').pop();
+
+            // Obter os botões selecionados
+            const botoesSelecionados = document.querySelectorAll('.botao-instrumento.selected');
+
+            // Verificar se os botões selecionados correspondem aos instrumentos corretos para o áudio atual
+            const instrumentosCorretos = obterInstrumentosCorretos(audioAtual);
+
+            // Verificar se todos os instrumentos corretos estão presentes nos botões selecionados e nenhum instrumento incorreto está presente
+            const todosCorretos = instrumentosCorretos.every(instrumento => {
+                return Array.from(botoesSelecionados).some(botao => botao.textContent.includes(instrumento))
+                    && !Array.from(botoesSelecionados).some(botao => !instrumentosCorretos.includes(botao.textContent.trim()));
+            });
+
+            // Retornar verdadeiro se todos os instrumentos corretos estiverem presentes nos botões selecionados
+            return todosCorretos;
+        }
+
+        // Função para obter os instrumentos corretos para um determinado áudio
+        function obterInstrumentosCorretos(audio) {
+            switch(audio) {
+                case "Baixo.wav":
+                    return ['🔉🎸 Baixo'];
+                case "BaixoViolao.wav":
+                    return ['🔉🎸 Baixo', '🎵 Violão'];
+                case "Bateria.mp3":
+                    return ['🥁 Bateria'];
+                case "BateriaBaixo.wav":
+                    return ['🥁 Bateria', '🔉🎸 Baixo'];
+                case "Flauta.wav":
+                    return ['🎼 Flauta'];
+                case "Guitarra.wav":
+                    return ['🎸 Guitarra'];
+                case "GuitarraBateriaBaixo.wav":
+                    return ['🎸 Guitarra', '🥁 Bateria', '🔉🎸 Baixo'];
+                case "GuitarraTeclado.wav":
+                    return ['🎸 Guitarra', '🎹 Teclado'];
+                case "Harpa.wav":
+                    return ['👼 Harpa'];
+                case "HarpaViolonceloFlautaViolino.wav":
+                    return ['👼 Harpa', '🎻 Violoncelo', '🎼 Flauta', '🎻 Violino'];
+                case "Triangulo.wav":
+                    return ['🔺 Triângulo'];
+                case "TrianguloBateriaBaixoGuitarra.wav":
+                    return ['🔺 Triângulo', '🥁 Bateria', '🔉🎸 Baixo', '🎸 Guitarra'];
+                case "Trompeta.wav":
+                    return ['🎺 Trompete'];
+                case "Violao.wav":
+                    return ['🎵 Violão'];
+                case "Violao2.mp3":
+                    return ['🎵 Violão'];
+                case "ViolaoBaixo.wav":
+                    return ['🎵 Violão', '🔉🎸 Baixo'];
+                case "Violino.wav":
+                    return ['🎻 Violino'];
+                case "ViolinoTrompetaBateria.mp3":
+                    return ['🎻 Violino', '🎺 Trompete', '🥁 Bateria'];
+                case "Violoncelo.wav":
+                    return ['🎻 Violoncelo'];
+                case "ViolonceloViolino.wav":
+                    return ['🎻 Violoncelo', '🎻 Violino'];
+                default:
+                    return [];
+            }
+        }
+
+        // Função para lidar com a confirmação do usuário e verificar se os instrumentos estão corretos
+        function confirmarSelecao() {
+            if (!confirmado) {
+                const acertou = verificarAcerto();
+                if (acertou) {
+                    const buttons = document.querySelectorAll('.botao-instrumento.selected');
+                    pontuacao += buttons.length; // Incrementar a pontuação com o número de botões selecionados
+                    localStorage.setItem('pontuacao', pontuacao); // Salvar a pontuação no armazenamento local
+                    const pontuacaoElement = document.querySelector('.pontuacao');
+                    pontuacaoElement.textContent = `🏅 Pontuação: ${pontuacao}`; // Atualizar o elemento de pontuação
+                    buttons.forEach(button => {
+                        button.classList.remove('selected');
+                        button.classList.add('confirmado');
+                    });
+                    confirmado = true;
+
+                    // Trocar o botão por um ícone de carregamento
+                    const confirmarBtn = document.querySelector('.botao-confirmar');
+                    confirmarBtn.innerHTML = 'Carregando...'; // Pode substituir por um ícone de spinner, por exemplo
+                    confirmarBtn.disabled = true;
+
+                    // Atualizar a página após dois segundos
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                } 
+                else {
+                    limparPontuacao();
+                    // Atualizar a página após dois segundos
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                    buttons.forEach(button => {
+                        button.classList.remove('selected');
+                        button.classList.add('confirmado');
+                    });
+                    confirmado = true;
+
+                    // Trocar o botão por um ícone de carregamento
+                    const confirmarBtn = document.querySelector('.botao-confirmar');
+                    confirmarBtn.innerHTML = 'Carregando...'; // Pode substituir por um ícone de spinner, por exemplo
+                    confirmarBtn.disabled = true;
+                }
+            }
         }
 
             </script>
