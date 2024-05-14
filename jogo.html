@@ -112,6 +112,21 @@
         .botao-confirmar:hover {
             background-color: #218838;
         }
+
+        .mensagem-erro {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 0, 0, 0.5); /* Vermelho semi-transparente */
+            color: #fff;
+            font-size: 24px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
     </style>
 </head>
 <body>
@@ -122,7 +137,6 @@
                 <source src>
             </audio>
         </div>
-        
 
         <div>
             <button class="botao-instrumento" onclick="toggleSelection(this)">🎹 Piano</button>
@@ -142,6 +156,8 @@
             <button class="botao-instrumento" onclick="toggleSelection(this)">🎻 Violoncelo</button>
             <button class="botao-instrumento" onclick="toggleSelection(this)">🎹 Teclado</button>
         </div>
+        <div class="mensagem-erro">Tente novamente!</div>
+        
         <button class="botao-confirmar" onclick="confirmarSelecao()">Confirmar</button>
     </div>
 
@@ -208,6 +224,14 @@
         localStorage.removeItem('pontuacao'); // Limpar a pontuação do armazenamento local
         pontuacao = 0; // Reiniciar a pontuação para zero
         atualizarPontuacao(); // Atualizar a exibição da pontuação na página
+        }
+
+        // Função para atualizar a exibição da pontuação na página
+        function atualizarPontuacao() {
+            localStorage.removeItem('pontuacao'); // Limpar a pontuação do armazenamento local
+            pontuacao = 0; // Reiniciar a pontuação para zero
+            const pontuacaoElement = document.querySelector('.pontuacao');
+            pontuacaoElement.textContent = `🏅 Pontuação: ${pontuacao}`;
         }
         
         // Função para verificar se os botões selecionados correspondem aos instrumentos corretos
@@ -285,7 +309,7 @@
                 const acertou = verificarAcerto();
                 if (acertou) {
                     const buttons = document.querySelectorAll('.botao-instrumento.selected');
-                    pontuacao += buttons.length; // Incrementar a pontuação com o número de botões selecionados
+                    pontuacao += buttons.length * 100; // Incrementar a pontuação com o número de botões selecionados
                     localStorage.setItem('pontuacao', pontuacao); // Salvar a pontuação no armazenamento local
                     const pontuacaoElement = document.querySelector('.pontuacao');
                     pontuacaoElement.textContent = `🏅 Pontuação: ${pontuacao}`; // Atualizar o elemento de pontuação
@@ -306,31 +330,35 @@
                     }, 2000);
                 } 
                 else {
-                    limparPontuacao();
-                    // Atualizar a página após dois segundos
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 2000);
-                    buttons.forEach(button => {
-                        button.classList.remove('selected');
-                        button.classList.add('confirmado');
-                    });
-                    confirmado = true;
-
-                    // Trocar o botão por um ícone de carregamento
-                    const confirmarBtn = document.querySelector('.botao-confirmar');
-                    confirmarBtn.innerHTML = 'Carregando...'; // Pode substituir por um ícone de spinner, por exemplo
-                    confirmarBtn.disabled = true;
+                    pontuacao = 0;
+                    atualizarPontuacao();
+                    mostrarMensagemErro();
                 }
             }
         }
 
-            </script>
+        // Função para mostrar a mensagem de erro por um segundo e depois ocultá-la
+        function mostrarMensagemErro() {
+            const mensagemErro = document.querySelector('.mensagem-erro');
+            mensagemErro.style.display = 'block';
 
-            <!-- Botão "Voltar" -->
+            // Definir um atraso para ocultar a mensagem após um segundo (1000 milissegundos)
+            setTimeout(() => {
+                ocultarMensagemErro();
+            }, 1000);
+        }
 
-            <a class="botao-voltar" onclick="limparPontuacao()" href="main.html"><span>Voltar</span></a>
+        // Função para ocultar a mensagem de erro
+        function ocultarMensagemErro() {
+            const mensagemErro = document.querySelector('.mensagem-erro');
+            mensagemErro.style.display = 'none';
+        }
 
-            <div class="pontuacao">🏅 Pontuação:</div>
+
+    </script>
+
+    <a class="botao-voltar" onclick="limparPontuacao()" href="main.html"><span>Voltar</span></a>
+
+    <div class="pontuacao">🏅 Pontuação:</div>
 </body>
 </html>
