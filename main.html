@@ -9,7 +9,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Courier New', Courier, monospace;
-            background-image: url('BackgroundMainmenu.jpg'); /* Substitua 'caminho/para/sua/imagem.jpg' pelo caminho da sua imagem */
+            background-image: url('BackgroundMainmenu.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: repeat;
@@ -28,7 +28,7 @@
             font-size: 72px;
             font-weight: bold;
             color: #ffffff;
-            margin-bottom: 200px;
+            margin-bottom: 100px;
         }
 
         .botao-comecar {
@@ -36,16 +36,19 @@
             padding: 60px 200px;
             font-size: 50px;
             font-weight: bold;
-            background-color: #54308d;
             color: #fff;
             text-decoration: none;
             border-radius: 35px;
-            transition: background-color 0.3s ease;
+            transition: color 0.3s ease;
             cursor: pointer;
+            border: none; 
+            background-color: transparent; 
+            text-decoration: underline;
+            margin-bottom: 100px;
         }
 
         .botao-comecar:hover {
-            background-color: #9f5adf;
+            color: rgb(122, 76, 209); 
         }
 
         .desenvolvedores {
@@ -61,7 +64,7 @@
 <body>
     <div class="container">
         <div class="titulo">🎶 Musical Guess 🎶</div>
-        <a href="jogo.html" id="botao-comecar" class="botao-comecar">Começar 🎧</a>
+        <a href="jogo.html" id="botao-comecar" class="botao-comecar">Start</a>
     </div>
 
     <div class="desenvolvedores">
@@ -73,4 +76,3 @@
 
 </body>
 </html>
-

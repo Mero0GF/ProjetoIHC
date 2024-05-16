@@ -44,7 +44,7 @@
             line-height: 20px;
             font-size: 24px;
             font-weight: bold;
-            background-color: #007bff; /* Cor azul claro */
+            background-color: rgb(122, 76, 209); /* Cor azul claro */
             color: #fff;
             margin: 10px;
             border: none;
@@ -55,7 +55,7 @@
         }
 
         .botao-instrumento.selected {
-            background-color: #8ab6d6; /* Mantém a cor azul claro ao ser selecionado */
+            background-color: rgb(182, 153, 236); /* Mantém a cor azul claro ao ser selecionado */
             color: #fff;
         }
 
@@ -354,7 +354,21 @@
             mensagemErro.style.display = 'none';
         }
 
-
+            // Event listener for the 'Escape' key to go back to the main page
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    window.location.href = 'main.html';
+                }
+            });
+        
+            // Event listener for the 'Space' key to confirm the selection
+            document.addEventListener('keydown', function(event) {
+                if (event.code === 'Space') {
+                    confirmarSelecao();
+                }
+            });
+        
+        
     </script>
 
     <a class="botao-voltar" onclick="limparPontuacao()" href="main.html"><span>Voltar</span></a>
