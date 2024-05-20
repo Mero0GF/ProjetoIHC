@@ -11,7 +11,7 @@
             position: relative; 
             min-height: 100vh;
             font-family: 'Courier New', Courier, monospace;
-            background-image: url('BackgroundMainmenu.jpg'); /* Substitua 'caminho/para/sua/imagem.jpg' pelo caminho da sua imagem */
+            background-image: url('BackgroundMainmenu.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: repeat;
@@ -29,11 +29,11 @@
         }
 
         .music-player {
-            background: none; /* Removendo o fundo roxo */
-            width: 500px; /* Aumentando o tamanho */
-            padding: 20px; /* Espaçamento interno */
+            background: none; 
+            width: 500px; 
+            padding: 20px; 
             text-align: center;
-            margin-bottom: 20px; /* Reduzindo a margem inferior */
+            margin-bottom: 20px; 
             border-radius: 25px;
         }
 
@@ -44,7 +44,7 @@
             line-height: 20px;
             font-size: 24px;
             font-weight: bold;
-            background-color: rgb(122, 76, 209); /* Cor azul claro */
+            background-color: rgb(122, 76, 209); 
             color: #fff;
             margin: 10px;
             border: none;
@@ -55,37 +55,37 @@
         }
 
         .botao-instrumento.selected {
-            background-color: rgb(182, 153, 236); /* Mantém a cor azul claro ao ser selecionado */
+            background-color: rgb(182, 153, 236); 
             color: #fff;
         }
 
         .botao-instrumento.confirmado {
-            background-color: #28a745 !important; /* Cor verde */
+            background-color: #28a745 !important; 
         }
 
         .botao-voltar {
-            padding: 15px 30px; /* Ajustando o tamanho */
+            padding: 15px 30px;
             font-size: 22px;
             font-weight: bold;
-            color: #ffffff; /* Cor roxa */
+            color: #ffffff; 
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            transition: color 0.3s ease; /* Adicionando transição de cor */
-            text-decoration: underline; /* Adicionando sublinhado */
+            transition: color 0.3s ease; 
+            text-decoration: underline; 
             position: absolute;
-            top: 10px; /* Posicionamento superior */
-            left: 10px; /* Posicionamento esquerdo */
+            top: 10px; 
+            left: 10px; 
         }
 
         .botao-voltar:hover {
-            color: #a0a0a0; /* Mudando a cor no hover */
+            color: #a0a0a0; 
         }
 
         .pontuacao {
             position: absolute;
             top: 10px;
-            right: 10px; /* Movendo para a direita */
+            right: 10px; 
             font-size: 30px;
             font-weight: bold;
             border: none;
@@ -119,7 +119,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(255, 0, 0, 0.5); /* Vermelho semi-transparente */
+            background-color: rgba(255, 0, 0, 0.5); 
             color: #fff;
             font-size: 24px;
             padding: 10px 20px;
@@ -162,7 +162,6 @@
     </div>
 
     <script>
-        // Função para trocar a seleção do botão
         let confirmado = false;
         let pontuacao = localStorage.getItem('pontuacao') ? parseInt(localStorage.getItem('pontuacao')) : 0; // Carregar a pontuação do armazenamento local
         // Lista de arquivos de áudio
@@ -348,25 +347,22 @@
             }, 1000);
         }
 
-        // Função para ocultar a mensagem de erro
         function ocultarMensagemErro() {
             const mensagemErro = document.querySelector('.mensagem-erro');
             mensagemErro.style.display = 'none';
         }
 
-            // Event listener for the 'Escape' key to go back to the main page
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape') {
-                    window.location.href = 'main.html';
-                }
-            });
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                window.location.href = 'main.html';
+            }
+        });
         
-            // Event listener for the 'Space' key to confirm the selection
-            document.addEventListener('keydown', function(event) {
-                if (event.code === 'Space') {
-                    confirmarSelecao();
-                }
-            });
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Space') {
+                confirmarSelecao();
+            }
+        });
         
         
     </script>
